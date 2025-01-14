@@ -1,0 +1,8 @@
+#include<stdio.h> 
+#define pi 3.14 
+#define CIRCUMFER(x) ( pi*pi*r)
+int main () { 
+int r = 10 ; 
+printf("chu vi %.2f", CIRCUMFER(r)); 
+return 0;
+}
