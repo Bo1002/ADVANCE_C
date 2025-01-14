@@ -1,0 +1,19 @@
+#include<stdio.h>
+#include<stdarg.h>
+//tinh tong 
+#define sum(...) tong(__VA_ARGS__, 'a')
+int tong(int count  , ... ){ 
+    va_list args;
+    va_list check ;
+    va_start (args,count); 
+    int ameo = count;
+    va_copy(check, args); 
+    while ( va_arg(check , int) != 'a' ){ 
+         ameo += va_arg(args,int );
+    } 
+    va_end(args);
+   return ameo;
+}
+int main (){ 
+    printf("tong la %d",sum(1,2,3,4,5,6,7,8));
+}
