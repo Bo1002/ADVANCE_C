@@ -1,0 +1,8 @@
+#include<stdio.h>
+
+#define link(a,b) a##b
+int main(){ 
+    int ab = 50 ;
+    printf("link :%d",link(a,b));
+return 0;
+}
