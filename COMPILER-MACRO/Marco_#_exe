@@ -1,0 +1,6 @@
+#include<stdio.h>
+#define CONTENT(content) printf(#content)
+int main (){ 
+    CONTENT(abc);
+    return 0 ; 
+}
