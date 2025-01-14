@@ -1,0 +1,8 @@
+#include<stdio.h> 
+#include<assert.h>
+int main (){
+int x  =  10;
+assert(x== 10);
+//trường hợp đúng
+pr("%d",x);
+}
