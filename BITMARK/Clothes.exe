@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdint.h>
+
+#define HAT       1<<0 
+#define SHIRT     1<<1 
+#define ASSSER    1<<2 
+#define pant      1<<3
+#define trouser   1<<4 
+#define FEATURE1  1<<5
+#define FEATURE2  1<<6
+#define FEATURE3  1<<7
+
+void enablebit(uint8_t *features , uint8_t feature  ){
+     *features |= feature;
+}
+void dissablebit(uint8_t *features , uint8_t feature ){ 
+    *features &= ~feature;
+}
+void listchosebit(uint8_t feature ){ 
+    printf("chose what ever you want\n"); 
+    
+    if( feature & HAT)
+    { 
+        printf("-HAT\n");
+    }
+
+    if( feature & SHIRT)
+    { 
+        printf("-SHIRT\n");
+    }
+
+    if(feature & ASSSER)
+    { 
+        printf("-ASSER\n");
+    }
+
+    if (feature & trouser)
+    {
+        printf("-trouser\n");
+    }
+
+    for(int i = 0 ; i < 8 ; i++)
+    { 
+       printf("feature selected: %d\n", (feature >> i) & 1);
+    }
+}
+int main (){ 
+     uint8_t options = 0;
+
+    
+    enablebit(&options, HAT | SHIRT | ASSSER);
+
+    dissablebit(&options, ASSSER);
+
+    
+    listchosebit(options);
+    
+    return 0;
+}
