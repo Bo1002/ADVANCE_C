@@ -1,0 +1,48 @@
+#include<stdio.h>
+
+#define led1 1<<0
+#define led2 1<<1
+#define led3 1<<2
+#define led4 1<<3
+
+void turnonled(unsigned int *GPIO_PORT, unsigned int LED ){ 
+     *GPIO_PORT |= LED ;
+}
+
+void turnoff(unsigned int *GPIO_PORT, unsigned int LED){
+    *GPIO_PORT &= ~LED;
+}
+
+int main ()
+{ 
+ unsigned int GPIO_PORT = 0;
+
+ turnonled(&GPIO_PORT , led1 | led2);
+ if(GPIO_PORT & led1)
+ { 
+   printf("LED1 is on \n");
+ }
+ if(GPIO_PORT & led2)
+ {
+    printf("LED2 is on \n");
+ }
+ if(GPIO_PORT & led3)
+ {
+    printf("LED3 is on \n");
+ }
+ if(GPIO_PORT & led4 )
+ {
+    printf("LED4 is on \n");
+ }
+
+ turnoff(&GPIO_PORT , led2); 
+ if( (GPIO_PORT & led2) == 0){ 
+    printf("LED2 is off\n");
+ }
+ 
+ turnonled(&GPIO_PORT, led3 ); 
+ if(GPIO_PORT &led3){ 
+    printf("LEd3 IS ON ");
+ }
+ return 0;
+}
