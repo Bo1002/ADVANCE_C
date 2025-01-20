@@ -1,1 +1,69 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+typedef struct 
+{
+    char ten[100]; 
+    float diem;
+    int id;
+}Sinhvien;
 
+int cmpname(const void *a , const void *b ){ 
+    Sinhvien *x = (Sinhvien*)a;
+    Sinhvien *y = (Sinhvien*)b; 
+    return strcmp(x->ten,y->ten);
+}
+
+int averagegpa(const void *a ,const void *b ){ 
+   Sinhvien *x = (Sinhvien*)a; 
+   Sinhvien *y = (Sinhvien*)b;
+   return x->diem - y->diem; 
+}
+
+int idcompare( const void *a , const void *b ){ 
+    Sinhvien *x = (Sinhvien*)a;
+    Sinhvien *y = (Sinhvien*)b; 
+    return x->id - y->id;
+}  
+ 
+void display(Sinhvien *array, size_t size) {
+   for (size_t i = 0; i < size; i++) {
+       printf("ID: %d, Ten: %s, Diem Trung Binh: %.2f\n", array[i].id, array[i].ten, array[i].diem);
+   }
+   printf("\n");
+}
+ int main (){ 
+    Sinhvien danhSachSV[] = {
+       {  
+           .ten = "Hoang",
+           .diem = 7.5,
+           .id = 100
+       },
+       {
+           .ten = "Tuan",
+           .diem = 4.5,
+           .id = 101
+       },
+       {
+           .ten = "Vy",
+           .diem = 6.8,
+           .id = 102},
+       {  
+           .ten = "Ngan",
+           .diem = 5.6,
+           .id = 10
+       },
+   };
+   size_t size = sizeof(danhSachSV) / sizeof(danhSachSV[0]);
+
+   qsort(danhSachSV , size , sizeof(danhSachSV[0]), cmpname);
+   display(danhSachSV, size);
+
+   qsort(danhSachSV , size , sizeof(danhSachSV[0]), averagegpa); 
+   display(danhSachSV,size); 
+
+   qsort(danhSachSV , size , sizeof(danhSachSV[0]), idcompare);
+   display(danhSachSV,size);
+
+   return;
+ }
