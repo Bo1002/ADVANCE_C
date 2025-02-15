@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<setjmp.h>
+
+int erro_code;
+const char *erro_inform ;
+jmp_buf buf ;
+enum  error_file { 
+    NO_ERROR, 
+    FILE_ERROR, 
+    NETWORK_ERROR, 
+    CALCULATION_ERROR 
+};
+
+#define TRY  if((erro_code = setjmp(buf)) == NO_ERROR)
+
+#define THROW(err,inform)  do{ \
+    erro_code = err; \
+    erro_inform = inform;\
+    longjmp(buf,err);\
+}while(0)
+ 
+#define CATCH(erro)  else if (erro_code == erro )
+void readFile() {
+    printf("read file ...\n");
+    THROW (FILE_ERROR, "erro read file: File unavalaiable .");
+}
+
+void networkOperation() {
+    printf("network operating .. ");
+    THROW(NETWORK_ERROR,"erro in network operating");
+}
+
+void calculateData() {
+   printf("Calculating ..");
+   THROW(CALCULATION_ERROR, "error in calculate ");
+}
+
+
+int main(){ 
+    TRY {
+        readFile();
+        networkOperation();
+        calculateData();   
+    }
+    CATCH(FILE_ERROR ){
+        printf("%s\n",erro_inform);
+    }
+
+    CATCH(NETWORK_ERROR){
+        printf("%s\n",erro_inform);
+    }
+
+    CATCH(CALCULATION_ERROR){ 
+        printf("%s\n",erro_inform);
+    }
+    
+    printf("end process\n");
+}
