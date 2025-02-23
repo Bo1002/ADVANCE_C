@@ -1,0 +1,170 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node { 
+    int data; 
+    struct node *next ;
+}node ;
+
+node *makenode(int x){ 
+    node *newnode = (node*)malloc(sizeof(node )); 
+    newnode->data = x; 
+    newnode->next = NULL; 
+    return newnode;
+}
+
+int size( node *head ){ 
+    int k  = 0;
+    while(head != NULL){ 
+        ++k ; 
+        head = head->next ;
+    } 
+    return k ;
+}
+
+void pushfirst(node **head, int x){ 
+    node *newnode = makenode(x); 
+    newnode->next = *head ; 
+    *head = newnode;  
+}
+
+void pushback( node **head, int x){ 
+    node *newnode = makenode(x); 
+    if( *head == NULL) { 
+        *head = newnode;
+    }
+    else { 
+        node *tmp = *head ;
+        while(tmp->next != NULL){ 
+            tmp = tmp->next ;
+        } 
+        tmp->next = newnode ;
+    }
+}
+
+void pushin (node **head ,int k, int x){ 
+    node *newnode = makenode(x); 
+    int n = size(*head); 
+    if ( (*head) == NULL){ 
+        *head = newnode;
+    }
+    if(k < 1 || k > n-1) return ; 
+    if( k == 1 ) pushfirst(head , x);
+    if( k == n-1 ) pushback(head , x);
+    else { 
+        node *tmp = *head ; 
+        for(int i = 0 ; i < k-1; i++){ 
+            tmp = tmp->next ;
+        }
+        newnode->next = tmp->next ; 
+        tmp->next = newnode;
+    }
+} 
+
+void popfirst( node **head ){
+    node *tmp = *head; 
+    if( *head == NULL) return; 
+    if( (*head)->next ==  NULL){ 
+        free(*head); 
+        *head = NULL;
+    }
+    else
+    { 
+      *head = (*head)->next ;
+      free(tmp);
+    }
+}
+
+void popback( node **head ){ 
+    node *tmp = *head ;
+    if(*head == NULL) return; 
+    if( (*head)->next == NULL ){ 
+        free(*head); 
+        *head = NULL ;
+    }
+    else{
+        while( tmp ->next != NULL){ 
+            tmp = tmp->next ;
+        }
+        node *del = tmp ;
+        free(del); 
+        tmp->next = NULL;
+    }
+}
+
+void popin( node **head ,int k ){ 
+    node * tmp = *head; 
+    if( *head == NULL) return ;
+    if( (*head)->next == NULL ){ 
+        free(*head); 
+        *head = NULL ;
+    }
+    if( k > size(*head)-1 || k < 1) return ;
+    else
+    {
+        for(int i = 0 ; i < k-1 ; i++)
+        { 
+            tmp = tmp->next ;        
+        }
+        node * del = tmp->next;
+        tmp->next = del->next ;
+        free(del); 
+    }
+}
+
+int  firstnode(node *head){
+    if ( head = NULL){ 
+        printf("khong co node nao ..");
+        return 0;
+    }
+    
+    return head->data;
+}
+
+int  lastnode(node *head){ 
+    node *tmp = head;
+
+    while( tmp->next != NULL)
+    { 
+        tmp = tmp->next ;
+    }
+    return tmp->data;
+}
+
+int nodein( node *head, int k){ 
+    node *tmp = head; 
+    if( k < 1 || k > size(head)-1) return -1; 
+    for(int i = 0 ;i < k-1; i++){ 
+        tmp = tmp->next ;
+    }
+    return tmp->data;
+} 
+
+void duyet(node *head){ 
+    while ( head != NULL){ 
+        printf("%d ", head->data); 
+        head = head->next ;
+    }
+}
+int main (){ 
+    node *head= NULL;
+   pushfirst(&head,1 ); 
+   pushfirst(&head, 2); 
+   pushfirst(&head,3);
+   pushfirst(&head,4);
+   pushback(&head,5);
+   pushin(&head, 2,3);
+
+//    popfirst(&head);
+   duyet(head);
+
+// printf("\n");
+// printf("%d", nodein(head,2));
+
+//    printf("\n");
+//    printf("%d",firstnode(head));
+
+   printf("\n");
+   printf("%d",lastnode(head));
+
+}
